@@ -10,7 +10,21 @@ class _PostCreatorPageState extends State<PostCreatorPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(),
+      persistentFooterButtons: [
+        TextButton(onPressed: () => postItemPlaceholder, child: Text('Confirm'),),
+        TextButton(onPressed: () => retakePhotoPlaceholder, child: Text('Retake Photo')),
+      ],
+    );
+    //throw UnimplementedError();
   }
   
+  postItemPlaceholder(){
+
+  }
+  retakePhotoPlaceholder(){
+    
+  }
 }

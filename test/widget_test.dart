@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:reclaim/lost_item.dart';
 
 import 'package:reclaim/main.dart';
 
@@ -26,5 +27,16 @@ void main() {
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+  });
+
+  testWidgets('LostItem creates an item with correct properties', (WidgetTester tester) async {
+    //Edit later once items have been added to UI
+    LostItem testLostItem = LostItem('testPoster', 'testImagePath', 'testDescription', false);
+    await tester.pumpWidget(const MyApp());
+
+    assert(testLostItem.getPoster() == 'testPoster');
+    assert(testLostItem.getImagePath() == 'testImagePath');
+    assert(testLostItem.getDescription() == 'testDescription');
+    assert(testLostItem.wasFound() == false);
   });
 }

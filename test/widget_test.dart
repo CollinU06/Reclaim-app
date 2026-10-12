@@ -16,12 +16,12 @@ void main() {
 
   testWidgets('LostItem creates an item with correct properties', (WidgetTester tester) async {
     //Edit later once items have been added to UI
-    LostItem testLostItem = LostItem('testPoster', 'testImagePath', 'testDescription', false);
+    LostItem testLostItem = LostItem('testPoster', 'testImagePath', ['testDescription'], false);
     await tester.pumpWidget(const MaterialApp(home: HomePage()));
 
     assert(testLostItem.getPoster() == 'testPoster');
     assert(testLostItem.getImagePath() == 'testImagePath');
-    assert(testLostItem.getDescription() == 'testDescription');
+    assert(testLostItem.getDescription() == ['testDescription']);
     assert(testLostItem.wasFound() == false);
   });
 }

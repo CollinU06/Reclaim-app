@@ -1,7 +1,7 @@
 class LostItem(this.poster, this.imagePath, this.description, this.isFound){
   final String poster;
   final String imagePath;
-  final String description;
+  final List<String> description;
   final bool isFound;
 
   String getPoster(){
@@ -12,8 +12,16 @@ class LostItem(this.poster, this.imagePath, this.description, this.isFound){
     return imagePath;
   }
   
-  String getDescription(){
+  List<String> getDescription(){
     return description;
+  }
+
+  String descriptionAsString(){
+    String result = '';
+    for (int str = 0; str < description.length; str++){
+      result += '${description[str]}\n';
+    }
+    return result;
   }
 
   bool wasFound(){

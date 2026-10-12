@@ -1,7 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class PostCreatorPage extends StatefulWidget{
-  const PostCreatorPage({super.key});
+  const PostCreatorPage({super.key, required this.imagePath});
+
+  // the photo taken with the camera
+  final String imagePath;
   
   @override
   State<PostCreatorPage> createState() => _PostCreatorPageState();
@@ -13,7 +17,8 @@ class _PostCreatorPageState extends State<PostCreatorPage> {
     return Scaffold(
       body: Column(
         children:[
-          //Add image here,
+          // the photo, sized to fit the space above the text boxes
+          Expanded(child: Image.file(File(widget.imagePath))),
           Column(
             children: [
               TextField(decoration: InputDecoration(

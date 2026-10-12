@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:reclaim/Pages/post_creator.dart';
 
 // the first screen, with buttons for login, post, and finder
 class HomePage extends StatefulWidget {
@@ -60,8 +62,20 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // TODO: open the post screen
+              onPressed: () async {
+                // open the phone's camera
+                final photo = await ImagePicker().pickImage(source: ImageSource.camera);
+                // stop if the user closed the camera without taking a photo
+                if (photo == null) return;
+                // stop if the user left this screen while the camera was open
+                if (!mounted) return;
+                // open the post screen with the photo
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PostCreatorPage(imagePath: photo.path),
+                  ),
+                );
               },
               child: const Text('Post'),
             ),

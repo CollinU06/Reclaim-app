@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:reclaim/Pages/post_creator.dart';
 
 // the first screen, with buttons for login, post, and finder
 class HomePage extends StatefulWidget {
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // TODO: open the post screen
+                Navigator.push(context, MaterialPageRoute(builder:(context) => PostCreatorPage(),));
               },
               child: const Text('Post'),
             ),

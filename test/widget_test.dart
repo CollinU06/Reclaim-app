@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:reclaim/lost_item.dart';
 import 'package:reclaim/Pages/home_page.dart';
 
 void main() {
@@ -11,5 +12,16 @@ void main() {
     expect(find.text('Login'), findsOneWidget);
     expect(find.text('Post'), findsOneWidget);
     expect(find.text('Finder'), findsOneWidget);
+  });
+
+  testWidgets('LostItem creates an item with correct properties', (WidgetTester tester) async {
+    //Edit later once items have been added to UI
+    LostItem testLostItem = LostItem('testPoster', 'testImagePath', ['testDescription'], false);
+    await tester.pumpWidget(const MaterialApp(home: HomePage()));
+
+    assert(testLostItem.getPoster() == 'testPoster');
+    assert(testLostItem.getImagePath() == 'testImagePath');
+    assert(testLostItem.getDescription() == ['testDescription']);
+    assert(testLostItem.wasFound() == false);
   });
 }

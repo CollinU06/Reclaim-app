@@ -24,4 +24,26 @@ void main() {
     assert(testLostItem.getDescription() == ['testDescription']);
     assert(testLostItem.wasFound() == false);
   });
+
+  // when nobody is logged in, the login button should be clickable (not greyed out)
+  testWidgets('Login button is enabled when not logged in',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: HomePage()));
+
+    final loginButton = tester.widget<ElevatedButton>(
+      find.widgetWithText(ElevatedButton, 'Login'),
+    );
+    expect(loginButton.onPressed, isNotNull);
+  });
+
+  // tapping post without logging in should show a message instead of opening the camera
+  testWidgets('Post button asks you to log in first',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: HomePage()));
+
+    await tester.tap(find.text('Post'));
+    await tester.pump();
+
+    expect(find.text('Please log in first'), findsOneWidget);
+  });
 }

@@ -63,8 +63,20 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
+                // you have to be logged in to post
+                if (!_isUserSignedIn) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please log in first')),
+                  );
+                  return;
+                }
                 // open the phone's camera
-                final photo = await ImagePicker().pickImage(source: ImageSource.camera);
+                // the photo is shrunk so it can be saved in firestore
+                final photo = await ImagePicker().pickImage(
+                  source: ImageSource.camera,
+                  maxWidth: 800,
+                  imageQuality: 50,
+                );
                 // stop if the user closed the camera without taking a photo
                 if (photo == null) return;
                 // stop if the user left this screen while the camera was open

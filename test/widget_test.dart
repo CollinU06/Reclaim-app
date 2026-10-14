@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:reclaim/lost_item.dart';
 import 'package:reclaim/Pages/home_page.dart';
+import 'package:reclaim/Widgets/lost_item.dart';
 
 void main() {
   // make sure the home screen shows all three buttons

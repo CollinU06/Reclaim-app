@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:reclaim/Pages/lost_items_screen.dart';
 import 'package:reclaim/Pages/post_creator.dart';
 
 // the first screen, with buttons for login, post, and finder
@@ -94,9 +95,10 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LostItemsScreen(),));
                 // TODO: open the lost items screen
               },
-              child: const Text('Finder'),
+              child: const Text('Lost Items'),
             ),
           ],
         ),

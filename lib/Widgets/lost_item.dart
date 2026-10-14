@@ -1,13 +1,22 @@
 class LostItem {
   final String poster;
-  final String imagePath;
+  final String imageData;
   final String description;
-  final bool isCompleted;
+  final bool isFound;
 
   LostItem({
     required this.poster,
-    required this.imagePath,
+    required this.imageData,
     required this.description,
-    required this.isCompleted,
+    required this.isFound,
   });
+
+  factory LostItem.fromFirestore(Map<String, dynamic> data) {
+    return LostItem(
+      poster: data['poster'] ?? '',
+      imageData: data['imageData'] ?? '',
+      description: data['description'] ?? '',
+      isFound: data['isFound'] as bool? ?? false,
+    );
+  }
 }

@@ -1,43 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:reclaim/Widgets/lost_item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 
 class LostItemsScreen extends StatelessWidget {
-  LostItemsScreen({super.key});
+  const LostItemsScreen({super.key});
 
-  final List<LostItem> items = [
-    LostItem(
-      poster: "Mark",
-      imagePath: "assets/wallet.jpg",
-      description: "Black wallet",
-      isCompleted: false,
-    ),
-    LostItem(
-      poster: "Collin",
-      imagePath: "assets/keys.jpg",
-      description: "Set of keys",
-      isCompleted: true,
-    ),
-  ];
-
-  @override
+  
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Lost Items"),
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('lost_items')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Error loading posts'),
+            );
+          }
 
-          return ListTile(
-            title: Text(item.description),
-            subtitle: Text(item.poster),
-            trailing: Icon(
-              item.isCompleted
-                  ? Icons.check_circle
-                  : Icons.help_outline,
-            ),
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          final docs = snapshot.data!.docs;
+
+          return ListView.builder(
+            itemCount: docs.length,
+            itemBuilder: (context, index) {
+
+              final data =
+                docs[index].data() as Map<String, dynamic>;
+
+              final imageBytes =
+                data['imageData'] != null
+                ? base64Decode(data['imageData'])
+                : null;
+
+              return Card(
+                margin: const EdgeInsets.all(8),
+                child: ListTile(
+                  leading: imageBytes != null 
+                  ? Image.memory(
+                      imageBytes,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                  )
+                  : const Icon(Icons.image_not_supported),
+                  title: Text(
+                    data['description'] ?? 'No Description',
+                  ),
+                  subtitle: Text(
+                    data['poster'] ?? 'Unknown User',
+                  ),
+                  trailing: Icon(
+                    (data['isFound'] ?? false)
+                        ? Icons.check_circle
+                        : Icons.help_outline,
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

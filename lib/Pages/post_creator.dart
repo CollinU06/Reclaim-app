@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
@@ -141,11 +143,18 @@ class PostCreatorPage extends StatefulWidget{
       final imageData =
           base64Encode(imageBytes);
 
+      String username = 'Anonymous';
+      User? currentUser = FirebaseAuth.instance.currentUser;
+      String? displayName = currentUser?.providerData[0].displayName;
+      if (displayName != null) {
+        username = displayName;
+      }
+
       //Saves it to the firestore
       await FirebaseFirestore.instance
           .collection('lost_items')
           .add({
-        'poster': 'Anonymous',
+        'poster':  username,
         'description': descriptionController.text,
         'itemName': itemNameController.text.trim(),
         'category': selectedCategory,

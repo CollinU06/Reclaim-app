@@ -96,7 +96,6 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => LostItemsScreen(),));
-                // TODO: open the lost items screen
               },
               child: const Text('Lost Items'),
             ),

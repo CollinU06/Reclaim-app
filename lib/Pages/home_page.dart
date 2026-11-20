@@ -25,14 +25,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 64, 56, 56),
+
       appBar: AppBar(
-        title: const Text('Reclaim'),
+        backgroundColor: const Color.fromARGB(255, 221, 105, 10),
+        shape: const Border(bottom: BorderSide(color: Colors.black)),
+
+        title: const Center(
+          child: Text(
+            'Reclaim',
+            style: TextStyle(color: Color.fromARGB(255, 39, 33, 33)),
+          ),
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepOrange,
+                side: const BorderSide(color: Colors.black),
+              ),
               // onPressed is null when signed in, which greys out the button
               onPressed: _isUserSignedIn
                   ? null
@@ -50,7 +64,10 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.pop(context);
                               }),
                               // go back to the home screen after making an account
-                              AuthStateChangeAction<UserCreated>((context, state) {
+                              AuthStateChangeAction<UserCreated>((
+                                context,
+                                state,
+                              ) {
                                 _signedIn();
                                 Navigator.pop(context);
                               }),
@@ -59,7 +76,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     },
-              child: const Text('Login'),
+              child: const Text(
+                'Login',
+                style: TextStyle(color: Color.fromARGB(255, 52, 48, 43)),
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -67,7 +87,12 @@ class _HomePageState extends State<HomePage> {
                 // you have to be logged in to post
                 if (!_isUserSignedIn) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please log in first')),
+                    const SnackBar(
+                      content: Text(
+                        'Please log in first',
+                        style: TextStyle(color: Colors.orangeAccent),
+                      ),
+                    ),
                   );
                   return;
                 }
@@ -86,18 +111,34 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PostCreatorPage(imagePath: photo.path),
+                    builder: (context) =>
+                        PostCreatorPage(imagePath: photo.path),
                   ),
                 );
               },
               child: const Text('Post'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepOrange,
+                foregroundColor: const Color.fromARGB(255, 52, 48, 43),
+                side: const BorderSide(color: Colors.black),
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LostItemsScreen(),));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LostItemsScreen()),
+                );
               },
-              child: const Text('Lost Items'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepOrange,
+                side: const BorderSide(color: Colors.black),
+              ),
+              child: const Text(
+                'Lost Items',
+                style: TextStyle(color: Color.fromARGB(255, 52, 48, 43)),
+              ),
             ),
           ],
         ),
